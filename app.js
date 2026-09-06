@@ -17,6 +17,23 @@ const captionInput = document.querySelector("#entry-caption");
 const entryTemplate = document.querySelector("#entry-template");
 const searchPanel = document.querySelector("#search-panel");
 const searchInput = document.querySelector("#search-input");
+const saveButton = document.querySelector(".save-button");
+const saveLabel = document.querySelector("#save-label");
+
+const entryRevealObserver = "IntersectionObserver" in window ? new IntersectionObserver((items) => {
+  items.forEach((item) => { if (item.isIntersecting) { item.target.classList.add("is-visible"); entryRevealObserver.unobserve(item.target); } });
+}, { threshold: 0.16, rootMargin: "0px 0px -5%" }) : null;
+
+function prepareEntryReveal(element, index) {
+  element.classList.add("is-revealable");
+  element.style.setProperty("--reveal-delay", `${Math.min(index * 75, 420)}ms`);
+  if (entryRevealObserver) entryRevealObserver.observe(element); else element.classList.add("is-visible");
+}
+
+function animateControl(control) {
+  control.classList.remove("is-interacting"); void control.offsetWidth; control.classList.add("is-interacting");
+  window.setTimeout(() => control.classList.remove("is-interacting"), 500);
+}
 
 let selectedType = "photo";
 let selectedCategory = "other";
@@ -200,7 +217,7 @@ async function renderWall(query = "") {
     const matchesStatus = activeStatus === "all" || (activeStatus === "achieved" ? entry.achieved : !entry.achieved);
     return matchesSearch && matchesCategory && matchesStatus;
   });
-  displayed.forEach((entry) => wall.append(renderEntry(entry)));
+  displayed.forEach((entry, index) => { const element = renderEntry(entry); wall.append(element); prepareEntryReveal(element, index); });
   emptyState.hidden = entries.length !== 0 || Boolean(normalizedQuery);
   if (entries.length && !displayed.length && (normalizedQuery || activeCategory !== "all" || activeStatus !== "all")) {
     emptyState.hidden = false;
@@ -268,7 +285,9 @@ function resetComposer() {
   setCategory("other");
   editingEntry = null;
   document.querySelector("#composer-kicker").textContent = "New piece";
-  document.querySelector("#save-label").textContent = "Pin it to my wall";
+  saveLabel.textContent = "Pin it to my wall";
+  saveButton.disabled = false;
+  form.dataset.saving = "";
 }
 
 function openComposer(entry = null) {
@@ -307,11 +326,15 @@ fileDrop.addEventListener("drop", (event) => {
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
+  if (form.dataset.saving === "true") return;
   const caption = captionInput.value.trim();
   if (selectedType === "note" && !caption) { captionInput.focus(); return; }
   if (selectedType !== "note" && !selectedFile) { fileDrop.focus(); return; }
   const existingFile = editingEntry?.file || null;
-  await saveEntry({
+  form.dataset.saving = "true";
+  saveButton.disabled = true;
+  saveLabel.textContent = "Adding to your wall…";
+  try { await saveEntry({
     ...editingEntry,
     id: editingEntry?.id || crypto.randomUUID(),
     type: selectedType,
@@ -320,10 +343,8 @@ form.addEventListener("submit", async (event) => {
     file: selectedType === "note" ? null : selectedFile || existingFile,
     crop: selectedType === "photo" ? { ...crop } : null,
     createdAt: editingEntry?.createdAt || Date.now(),
-  });
-  composer.close();
-  resetComposer();
-  await renderWall(searchInput.value);
+  }); composer.close(); resetComposer(); await renderWall(searchInput.value); }
+  catch (error) { console.error(error); saveLabel.textContent = "Try saving again"; saveButton.disabled = false; form.dataset.saving = ""; }
 });
 
 document.querySelector("#search-toggle").addEventListener("click", () => {
@@ -336,6 +357,7 @@ searchInput.addEventListener("input", () => renderWall(searchInput.value));
 document.querySelector("#clear-search").addEventListener("click", () => { searchInput.value = ""; renderWall(); searchInput.focus(); });
 document.querySelectorAll(".category-filter").forEach((button) => button.addEventListener("click", () => {
   activeCategory = button.dataset.categoryFilter;
+  animateControl(button);
   document.querySelectorAll(".category-filter").forEach((filter) => {
     const active = filter === button;
     filter.classList.toggle("is-active", active);
@@ -345,6 +367,7 @@ document.querySelectorAll(".category-filter").forEach((button) => button.addEven
 }));
 document.querySelectorAll(".status-filter").forEach((button) => button.addEventListener("click", () => {
   activeStatus = button.dataset.statusFilter;
+  animateControl(button);
   document.querySelectorAll(".status-filter").forEach((filter) => {
     const active = filter === button;
     filter.classList.toggle("is-active", active);
@@ -358,3 +381,5 @@ renderWall().catch((error) => {
   emptyState.hidden = false;
   emptyState.querySelector("h2").textContent = "Your browser needs local storage enabled.";
 });
+
+if (document.readyState === "complete") window.setTimeout(() => document.body.classList.add("is-ready"), 650);

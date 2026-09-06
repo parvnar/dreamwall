@@ -12,8 +12,13 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <div class="loading-screen" role="status" aria-label="Opening Dreamwall">
+      <div class="loading-mark" aria-hidden="true">✦</div>
+      <p>Dreamwall</p><span class="loading-line" aria-hidden="true"></span>
+    </div>
     <div class="grain" aria-hidden="true"></div>
 
+    <div class="site-chrome">
     <header class="floating-nav" aria-label="Dreamwall navigation">
       <button class="icon-button" id="search-toggle" aria-label="Search your wall" aria-expanded="false">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="5.8"></circle><path d="m16 16 4 4"></path></svg>
@@ -36,6 +41,7 @@
       <button class="status-filter" type="button" data-status-filter="wanted" aria-pressed="false">To achieve</button>
       <button class="status-filter" type="button" data-status-filter="achieved" aria-pressed="false">Achieved</button>
     </nav>
+    </div>
 
     <section class="search-panel" id="search-panel" aria-label="Search entries" hidden>
       <label for="search-input">Search your wall</label>
@@ -45,9 +51,9 @@
 
     <main id="top">
       <section class="opening" aria-labelledby="opening-title">
-        <p class="eyebrow">A private place for becoming</p>
-        <h1 id="opening-title">The things I want to<br /><em>remember becoming.</em></h1>
-        <p class="opening-note">Keep a little room for wonder.</p>
+        <p class="eyebrow reveal-hero">A private place for becoming</p>
+        <h1 id="opening-title" class="reveal-hero">The things I want to<br /><em>remember becoming.</em></h1>
+        <p class="opening-note reveal-hero">Keep a little room for wonder.</p>
       </section>
 
       <section class="wall" id="wall" aria-label="Your Dreamwall">
@@ -136,6 +142,7 @@
       </article>
     </template>
 
+    <script>window.addEventListener("load", () => window.setTimeout(() => document.body.classList.add("is-ready"), 650), { once: true }); window.setTimeout(() => document.body.classList.add("is-ready"), 3500);</script>
     <script src="app.js"></script>
   </body>
 </html>
