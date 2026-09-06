@@ -1,0 +1,9 @@
+# Local development and operating-system files
+.DS_Store
+Thumbs.db
+node_modules/
+.env
+.env.*
+
+# Browser-exported or local backup data should never be committed.
+dreamwall-backup.*

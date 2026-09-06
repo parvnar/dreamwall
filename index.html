@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#fbf9f8" />
+    <meta name="description" content="Dreamwall — a private, personal dream board." />
+    <title>Dreamwall — my dreams.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="floating-nav" aria-label="Dreamwall navigation">
+      <button class="icon-button" id="search-toggle" aria-label="Search your wall" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="5.8"></circle><path d="m16 16 4 4"></path></svg>
+      </button>
+      <a class="wordmark" href="#top" aria-label="Dreamwall home">Dreamwall</a>
+      <button class="add-button" id="add-entry" aria-label="Add to your Dreamwall">+</button>
+    </header>
+
+    <nav class="category-nav" aria-label="Dream categories">
+      <button class="category-filter is-active" type="button" data-category-filter="all" aria-pressed="true">Free wall</button>
+      <button class="category-filter" type="button" data-category-filter="places" aria-pressed="false">Places</button>
+      <button class="category-filter" type="button" data-category-filter="experiences" aria-pressed="false">Experiences</button>
+      <button class="category-filter" type="button" data-category-filter="collectibles" aria-pressed="false">Collectibles</button>
+      <button class="category-filter" type="button" data-category-filter="tech" aria-pressed="false">Tech</button>
+    </nav>
+
+    <nav class="status-nav" aria-label="Dream status">
+      <span class="status-label">Show</span>
+      <button class="status-filter is-active" type="button" data-status-filter="all" aria-pressed="true">All</button>
+      <button class="status-filter" type="button" data-status-filter="wanted" aria-pressed="false">To achieve</button>
+      <button class="status-filter" type="button" data-status-filter="achieved" aria-pressed="false">Achieved</button>
+    </nav>
+
+    <section class="search-panel" id="search-panel" aria-label="Search entries" hidden>
+      <label for="search-input">Search your wall</label>
+      <input id="search-input" type="search" placeholder="A place, thought, or feeling…" autocomplete="off" />
+      <button id="clear-search" type="button">Clear</button>
+    </section>
+
+    <main id="top">
+      <section class="opening" aria-labelledby="opening-title">
+        <p class="eyebrow">A private place for becoming</p>
+        <h1 id="opening-title">The things I want to<br /><em>remember becoming.</em></h1>
+        <p class="opening-note">Keep a little room for wonder.</p>
+      </section>
+
+      <section class="wall" id="wall" aria-label="Your Dreamwall">
+        <div class="wall-intro" id="wall-intro">
+          <span class="scribble-arrow" aria-hidden="true">↙</span>
+          <p>Your wall begins here</p>
+        </div>
+      </section>
+
+      <section class="empty-state" id="empty-state" hidden>
+        <div class="empty-star">✦</div>
+        <h2>Leave a trace of what matters.</h2>
+        <p>Add a photograph, a small thought, or a moving moment. This wall lives only in this browser.</p>
+        <button class="text-button" data-open-composer>Begin your wall <span>→</span></button>
+      </section>
+    </main>
+
+    <button class="quiet-add" data-open-composer aria-label="Add a dream">Add a dream <span>+</span></button>
+
+    <dialog class="composer" id="composer">
+      <form id="entry-form" method="dialog">
+        <div class="composer-topline">
+          <p id="composer-kicker">New piece</p>
+          <button class="close-button" type="button" id="close-composer" aria-label="Close composer">×</button>
+        </div>
+        <h2>What do you want<br />to keep close?</h2>
+
+        <div class="type-picker" role="group" aria-label="Entry type">
+          <button class="type-option is-selected" type="button" data-entry-type="photo">Photo</button>
+          <button class="type-option" type="button" data-entry-type="video">Video</button>
+          <button class="type-option" type="button" data-entry-type="note">Just a thought</button>
+        </div>
+
+        <div class="category-picker" role="group" aria-label="Dream category">
+          <p class="picker-label">A little corner of your wall</p>
+          <div class="category-options">
+            <button class="category-option is-selected" type="button" data-entry-category="other">Other</button>
+            <button class="category-option" type="button" data-entry-category="places">Places</button>
+            <button class="category-option" type="button" data-entry-category="experiences">Experiences</button>
+            <button class="category-option" type="button" data-entry-category="collectibles">Collectibles</button>
+            <button class="category-option" type="button" data-entry-category="tech">Tech</button>
+          </div>
+        </div>
+
+        <label class="file-drop" id="file-drop" for="media-input">
+          <input id="media-input" type="file" accept="image/*,video/*" />
+          <span class="file-icon">⌁</span>
+          <span class="file-title">Choose a photo or video</span>
+          <span class="file-help">or drop it here</span>
+        </label>
+        <div class="media-preview" id="media-preview" hidden></div>
+        <section class="crop-controls" id="crop-controls" aria-label="Photo framing controls" hidden>
+          <div class="crop-heading">
+            <p>Frame the part you want to remember</p>
+            <span>Preview matches your wall</span>
+          </div>
+          <div class="aspect-options" role="group" aria-label="Photo shape">
+            <button class="aspect-option is-selected" type="button" data-crop-aspect="portrait">Portrait</button>
+            <button class="aspect-option" type="button" data-crop-aspect="square">Square</button>
+            <button class="aspect-option" type="button" data-crop-aspect="wide">Wide</button>
+          </div>
+          <label class="range-field" for="crop-y"><span>Move image up or down</span><input id="crop-y" type="range" min="0" max="100" value="35" /></label>
+          <label class="range-field" for="crop-x"><span>Move image left or right</span><input id="crop-x" type="range" min="0" max="100" value="50" /></label>
+          <label class="range-field" for="crop-zoom"><span>Zoom</span><input id="crop-zoom" type="range" min="1" max="2.3" step="0.05" value="1" /></label>
+        </section>
+
+        <label class="field-label" for="entry-caption">A line to go with it <span>optional</span></label>
+        <textarea id="entry-caption" rows="3" maxlength="280" placeholder="The little thing I don’t want to forget…"></textarea>
+        <p class="privacy-note">Private by default — saved only to this browser.</p>
+        <button class="save-button" type="submit"><span id="save-label">Pin it to my wall</span> <span>↗</span></button>
+      </form>
+    </dialog>
+
+    <template id="entry-template">
+      <article class="entry scatter-item">
+        <div class="media-frame"></div>
+        <time class="entry-created"></time>
+        <span class="achieved-badge" hidden><b>✓</b><span>Dream<br />achieved</span></span>
+        <p class="entry-caption"></p>
+        <button class="entry-menu" type="button" aria-label="Entry options">•••</button>
+        <div class="entry-actions" hidden>
+          <button class="edit-entry" type="button">Edit text</button>
+          <button class="toggle-achieved" type="button"></button>
+          <button class="delete-entry" type="button">Remove from wall</button>
+        </div>
+      </article>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
