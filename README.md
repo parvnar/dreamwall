@@ -1,32 +1,57 @@
 # Dreamwall
 
-A private, local-first digital dream board. It has no account, server, or paid dependency: entries and uploaded media are stored in the browser's IndexedDB on the device where you add them.
+> A private, local-first digital dream board for collecting the places, experiences, objects, and ideas worth working toward.
 
-## Run it locally
+Dreamwall is an experimental personal-product concept: part scrapbook, part vision board, and deliberately not a productivity dashboard. It uses an editorial, freeform wall rather than a rigid card grid, allowing each dream to feel more like a memory or a pinned keepsake.
 
-Open `index.html` in a modern browser. For the most reliable local-storage behavior, serve the folder with a small local web server, for example:
+## Why I built it
 
-```powershell
+I am an MBA student exploring how product thinking, design judgment, and AI-assisted development can turn an idea into a usable digital experience. Dreamwall is a hobby project and a practical experiment in defining a product direction, iterating from visual references, and working confidently with modern web code alongside AI.
+
+## What it demonstrates
+
+- Product concept development from an initial visual prototype
+- A deliberately non-standard, editorial interface for a personal-use product
+- AI-assisted frontend development and iterative debugging
+- Local-first thinking for private personal content
+- Clear UX decisions around content creation, editing, filtering, and achievement tracking
+
+## Features
+
+- Add photos, videos, or text-only thoughts
+- Write a short personal caption for each dream
+- Choose a photo crop: portrait, square, or wide
+- Move and zoom the image focal point so the saved wall matches the preview
+- Organize entries into Places, Experiences, Collectibles, Tech, or Other
+- Start on the free wall, then filter by category and status
+- Mark a dream as achieved with an on-image achievement stamp
+- Edit captions, review creation time, search entries, or remove an item
+- Keep all entries and uploaded media in the current browser profile
+
+## Built with
+
+- Semantic HTML
+- Modern CSS, including responsive layouts and custom visual treatments
+- Vanilla JavaScript
+- IndexedDB for local browser storage
+- Google Fonts: Playfair Display, Inter, Caveat, and DM Mono
+
+## Run locally
+
+Open `index.html` in a modern browser. For the most reliable local-storage behavior, serve the folder with a small local web server:
+
+```bash
 python -m http.server 8080
 ```
 
 Then visit `http://localhost:8080`.
 
-## What it does
+## Privacy
 
-- Add a photo with an optional one-line handwritten caption
-- Frame each photo before saving: choose portrait, square, or wide, then move and zoom the crop
-- Add a video with an optional caption
-- Pin a text-only thought
-- Drag and drop media into the composer
-- Categorize dreams into Places, Experiences, Collectibles, Tech, or Other
-- Start on the free wall, then filter by category
-- Search captions, edit text, and mark a dream as achieved with an on-photo achievement stamp
-- Filter every category by All, To achieve, or Achieved
-- See the date and time each dream was first pinned
-- Remove an item from the wall
-- Keep all content local to the current browser profile
+Dreamwall has no account, server, analytics, or cloud sync. Photos, videos, and entries remain in IndexedDB within the browser profile where they were added. Clearing browser site data, changing browsers, or switching devices removes access to that local wall.
 
-## Important privacy and backup note
+This repository contains the application source code only. No personal entries or uploaded media are committed.
 
-Clearing browser site data, changing browsers, or using another device will not carry the wall with you. There is intentionally no cloud synchronization yet. Before any hosting or multi-device version, the next useful addition is an export/import backup feature.
+## Project status
+
+Dreamwall is an actively evolving personal project. Planned explorations include backup/export tools, a more personalized opening message, and a private hosted version for personal use.
