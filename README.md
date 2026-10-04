@@ -4,6 +4,22 @@
 
 Dreamwall is an experimental personal-product concept: part scrapbook, part vision board, and deliberately not a productivity dashboard. It uses an editorial, freeform wall rather than a rigid card grid, allowing each dream to feel more like a memory or a pinned keepsake.
 
+## Preview
+
+### Desktop wall
+
+![Dreamwall desktop interface with editorial navigation and opening message](docs/screenshots/dreamwall-desktop.png)
+
+### Add a dream
+
+![Dreamwall composer for adding a photo, video, or thought](docs/screenshots/dreamwall-composer.png)
+
+### Mobile layout
+
+<p align="center">
+  <img src="docs/screenshots/dreamwall-mobile.png" width="390" alt="Dreamwall mobile interface" />
+</p>
+
 ## Why I built it
 
 I am an MBA student exploring how product thinking, design judgment, and AI-assisted development can turn an idea into a usable digital experience. Dreamwall is a hobby project and a practical experiment in defining a product direction, iterating from visual references, and working confidently with modern web code alongside AI.
